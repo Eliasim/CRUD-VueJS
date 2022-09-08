@@ -35,7 +35,8 @@
   </form>
 
   <div class="flex justify-center pt-4">
-    <button class="font-mono rounded-md bg-gray-300 p-1 mb-6" @click="guardar()">Guardar</button>
+    <button class="font-mono rounded-md bg-gray-300 p-1 mb-6 mx-2" @click="guardar()">Guardar</button>
+    <button class="font-mono rounded-md bg-red-400 p-1 mb-6 mx-2" v-show="btnCancelar" @click="cancelar">Cancelar</button>
   </div>
 
   <div class="flex justify-center" name="tabla">
@@ -58,8 +59,8 @@
           <td>{{persona.edad}}</td>
           <td>{{persona.trabajo}}</td>
           <td>
-            <button class="rounded-md bg-gray-300 p-1 mx-2 my-1" @click="editar(index)">Editar</button>
-            <button class="rounded-md bg-gray-300 p-1 mx-2 my-1" @click="eliminar(index)">Eliminar</button>
+            <button class="rounded-md bg-yellow-500 p-1 mx-2 my-1" @click="editar(index)" v-show="btnEditar">Editar</button>
+            <button class="rounded-md bg-red-500 p-1 mx-2 my-1" @click="eliminar(index)" v-show="btnEliminar">Eliminar</button>
           </td>
         </tr>
       </tbody>
@@ -82,6 +83,9 @@ data(){
     telefono: '',
     edad: '',
     trabajo: '',
+    btnCancelar: false,
+    btnEditar: true,
+    btnEliminar: true,
     listaPersonas:[],
     
   }
@@ -109,6 +113,10 @@ methods:{
     else
     {
       this.listaPersonas[this.indice] = persona
+      this.indice = -1
+      this.btnCancelar = false
+      this.btnEditar = true
+      this.btnEliminar = true
     }
     this.limpiar()
     console.log(this.listaPersonas);
@@ -125,6 +133,16 @@ methods:{
     this.edad = persona.edad
     this.telefono = persona.telefono
     this.trabajo = persona.trabajo
+    this.btnCancelar = true,
+    this.btnEditar = false,
+    this.btnEliminar = false
+  },
+  cancelar(){
+    this.limpiar()
+    this.btnCancelar = false
+    this.btnEditar = true
+    this.btnEliminar = true
+    this.indice = -1
   }
 },
 
